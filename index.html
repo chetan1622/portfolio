@@ -640,12 +640,41 @@
 
         .project-card-header {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 1rem;
         }
 
         .project-card-info {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .project-card-info .item-title {
+            font-size: 1.05rem;
+            line-height: 1.3;
+            margin-bottom: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-card .item-date {
+            margin-bottom: 0;
+            padding: 0.15rem 0.6rem;
+        }
+
+        .project-card .project-status {
+            margin-left: 0;
         }
 
         .project-card .project-icon {
@@ -1403,10 +1432,11 @@
                         <div class="project-icon"><i class="fas fa-rocket"></i></div>
                         <div class="project-card-info">
                             <div class="item-title">
-                                HireHunt AI – Job Referral & ATS Platform
+                                HireHunt AI – Job Referral & ATS Platform</div>
+                            <div class="project-meta">
                                 <span class="project-status live"><i class="fas fa-circle" style="font-size:6px"></i> Live</span>
+                                <span class="item-date"><i class="far fa-calendar"></i> Sep 2025 – May 2026</span>
                             </div>
-                            <div class="item-date"><i class="far fa-calendar"></i> Sep 2025 – May 2026</div>
                         </div>
                         <div class="project-toggle"><i class="fas fa-chevron-down"></i></div>
                     </div>
@@ -1443,11 +1473,11 @@
                     <div class="project-card-header">
                         <div class="project-icon"><i class="fas fa-briefcase"></i></div>
                         <div class="project-card-info">
-                            <div class="item-title">
-                                Job Referral Platform – Modern Web App
+                            <div class="item-title">Job Referral Platform – Modern Web App</div>
+                            <div class="project-meta">
                                 <span class="project-status live"><i class="fas fa-circle" style="font-size:6px"></i> Live</span>
+                                <span class="item-date"><i class="far fa-calendar"></i> 2025</span>
                             </div>
-                            <div class="item-date"><i class="far fa-calendar"></i> 2025</div>
                         </div>
                         <div class="project-toggle"><i class="fas fa-chevron-down"></i></div>
                     </div>
@@ -1481,11 +1511,11 @@
                     <div class="project-card-header">
                         <div class="project-icon"><i class="fas fa-comments"></i></div>
                         <div class="project-card-info">
-                            <div class="item-title">
-                                Twitter Sentiment Analysis & BI Pipeline
+                            <div class="item-title">Twitter Sentiment Analysis & BI Pipeline</div>
+                            <div class="project-meta">
                                 <span class="project-status completed"><i class="fas fa-check-circle" style="font-size:8px"></i> Completed</span>
+                                <span class="item-date"><i class="far fa-calendar"></i> Dec 2024 – May 2025</span>
                             </div>
-                            <div class="item-date"><i class="far fa-calendar"></i> Dec 2024 – May 2025</div>
                         </div>
                         <div class="project-toggle"><i class="fas fa-chevron-down"></i></div>
                     </div>
@@ -1518,11 +1548,11 @@
                     <div class="project-card-header">
                         <div class="project-icon"><i class="fas fa-chart-bar"></i></div>
                         <div class="project-card-info">
-                            <div class="item-title">
-                                Retail Data Analytics & Reporting
+                            <div class="item-title">Retail Data Analytics & Reporting</div>
+                            <div class="project-meta">
                                 <span class="project-status completed"><i class="fas fa-check-circle" style="font-size:8px"></i> Completed</span>
+                                <span class="item-date"><i class="far fa-calendar"></i> 2024</span>
                             </div>
-                            <div class="item-date"><i class="far fa-calendar"></i> 2024</div>
                         </div>
                         <div class="project-toggle"><i class="fas fa-chevron-down"></i></div>
                     </div>
