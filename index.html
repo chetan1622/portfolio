@@ -161,6 +161,7 @@
             gap: 0.4rem;
             padding: 0.4rem 1rem !important;
             border-radius: 8px !important;
+            cursor: pointer;
         }
 
         .nav-resume-btn:hover {
@@ -562,6 +563,12 @@
             color: var(--accent-gold);
         }
 
+        .resume-btn-group {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
         /* ===== TIMELINE FORMAT (EXPERIENCE & PROJECTS) ===== */
         .timeline-item {
             position: relative;
@@ -862,6 +869,157 @@
         .languages-header i {
             color: var(--accent-gold);
             font-size: 1.1rem;
+        }
+
+        /* ===== IN-PAGE RESUME MODAL & VIEWER ===== */
+        .resume-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .resume-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .resume-modal-content {
+            background: #161b22;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            width: 100%;
+            max-width: 950px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+
+        .resume-modal.active .resume-modal-content {
+            transform: scale(1);
+        }
+
+        .resume-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(9, 13, 22, 0.95);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .btn-sm {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.45rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .btn-sm.btn-primary {
+            background: var(--gradient-gold);
+            color: var(--navy-dark);
+        }
+
+        .btn-sm.btn-secondary {
+            background: transparent;
+            color: var(--accent-gold);
+            border: 1px solid rgba(210, 153, 34, 0.4);
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+            margin-left: 0.5rem;
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+        }
+
+        .resume-modal-body {
+            flex: 1;
+            background: #22272e;
+            position: relative;
+        }
+
+        .resume-modal-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1f6feb;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 3000;
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         /* ===== LIGHTBOX MODAL ===== */
@@ -1171,7 +1329,7 @@
             <li><a href="#skills" onclick="closeMenu()">Skills</a></li>
             <li><a href="#achievements" onclick="closeMenu()">Certifications</a></li>
             <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
-            <li><a href="Chetan_Patil_Data_Scientist.pdf" target="_blank" class="nav-resume-btn"><i class="fas fa-file-pdf"></i> Resume</a></li>
+            <li><button onclick="openResumeModal('Navbar Button'); closeMenu();" class="nav-resume-btn"><i class="fas fa-file-pdf"></i> Resume</button></li>
         </ul>
     </nav>
 
@@ -1196,8 +1354,11 @@
                 Results-driven and quantitative Data Analyst holding an M.Sc. in Data Science (9.09 CGPA) with proven expertise across Advanced SQL, Python (Pandas, NumPy, SciPy, Statsmodels), Power BI, Tableau, Looker Studio, and Advanced Excel. Proven track record in automating cross-departmental MIS reporting pipelines, statistical A/B testing frameworks, rule-based GST compliance audit engines, multi-modal supply chain optimization, and hybrid transformer NLP models.
             </p>
             <div class="btn-group">
-                <a href="Chetan_Patil_Data_Scientist.pdf" target="_blank" class="btn btn-primary">
-                    <i class="fas fa-file-pdf"></i> View / Download Resume
+                <button onclick="openResumeModal('Hero View Button')" class="btn btn-primary">
+                    <i class="fas fa-eye"></i> View Resume
+                </button>
+                <a href="Chetan_Patil_Data_Scientist.pdf" download="Chetan_Patil_Resume.pdf" onclick="trackResumeDownload('Hero Direct Download')" class="btn btn-secondary" style="border-color: var(--accent-gold);">
+                    <i class="fas fa-download"></i> Download Resume
                 </a>
                 <a href="#projects" class="btn btn-secondary">
                     <i class="fas fa-folder-open"></i> View Projects
@@ -1263,7 +1424,7 @@
                     </div>
                 </div>
 
-                <!-- Resume Download CTA Banner -->
+                <!-- Resume Download & View CTA Banner -->
                 <div class="resume-cta-banner">
                     <div class="cta-info">
                         <i class="fas fa-file-invoice"></i>
@@ -1272,9 +1433,14 @@
                             <small style="color: var(--text-muted); font-weight: 400;">M.Sc. Data Science | Dr. D. Y. Patil ACS College | CGPA: 9.09</small>
                         </div>
                     </div>
-                    <a href="Chetan_Patil_Data_Scientist.pdf" target="_blank" class="btn btn-primary" style="padding: 0.5rem 1.4rem; font-size: 0.88rem;">
-                        <i class="fas fa-download"></i> Open Resume PDF
-                    </a>
+                    <div class="resume-btn-group">
+                        <button onclick="openResumeModal('About Banner View')" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.88rem;">
+                            <i class="fas fa-eye"></i> View Resume Online
+                        </button>
+                        <a href="Chetan_Patil_Data_Scientist.pdf" download="Chetan_Patil_Resume.pdf" onclick="trackResumeDownload('About Banner Download')" class="btn btn-secondary" style="padding: 0.5rem 1.2rem; font-size: 0.88rem; border-color: var(--accent-gold);">
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1644,9 +1810,9 @@
         <section id="achievements">
             <div class="section-header reveal">
                 <h2 class="section-title">
-                    <span class="icon"><i class="fas fa-certificate"></i></span> Certifications & Languages
+                    <span class="icon"><i class="fas fa-certificate"></i></span> Verified Certifications
                 </h2>
-                <p class="section-subtitle">Verified certifications & linguistic proficiencies.</p>
+                <p class="section-subtitle">Verified credentials & linguistic proficiencies.</p>
             </div>
 
             <div class="cert-grid">
@@ -1716,10 +1882,42 @@
             </div>
         </section>
 
-        <!-- Lightbox Modal -->
+        <!-- Interactive In-Page Resume Modal -->
+        <div class="resume-modal" id="resumeModal" onclick="closeResumeModal(event)">
+            <div class="resume-modal-content">
+                <div class="resume-modal-header">
+                    <div class="modal-title">
+                        <i class="fas fa-file-pdf" style="color: var(--accent-gold);"></i>
+                        <span>Chetan G. Patil — Resume Preview</span>
+                    </div>
+                    <div class="modal-actions">
+                        <a href="Chetan_Patil_Data_Scientist.pdf" download="Chetan_Patil_Resume.pdf" class="btn-sm btn-primary" onclick="trackResumeDownload('Modal Download Button')">
+                            <i class="fas fa-download"></i> Download PDF
+                        </a>
+                        <a href="Chetan_Patil_Data_Scientist.pdf" target="_blank" class="btn-sm btn-secondary" onclick="trackResumeDownload('Modal Open New Tab')">
+                            <i class="fas fa-external-link-alt"></i> New Tab
+                        </a>
+                        <button class="modal-close-btn" onclick="closeResumeModal(null, true)" aria-label="Close modal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="resume-modal-body">
+                    <iframe id="resumeIframe" src="Chetan_Patil_Data_Scientist.pdf#view=FitH" title="Chetan G. Patil Resume"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal for Certificates -->
         <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
             <button class="lightbox-close" onclick="closeLightbox(event)"><i class="fas fa-times"></i></button>
             <img id="lightboxImg" src="" alt="Certificate Full View">
+        </div>
+
+        <!-- Toast notification -->
+        <div class="toast" id="downloadToast">
+            <i class="fas fa-check-circle"></i>
+            <span>Resume download started. Thank you for viewing!</span>
         </div>
 
         <!-- Contact Section -->
@@ -1743,9 +1941,9 @@
                         <a href="mailto:chetan.g.patil1622@gmail.com?subject=Opportunity%20Inquiry%20-%20Data%20Analyst&body=Hi%20Chetan,%0A%0AI%20reviewed%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20opportunity%20with%20you.%0A%0A" class="btn btn-secondary">
                             <i class="fas fa-envelope"></i> Send an Email
                         </a>
-                        <a href="Chetan_Patil_Data_Scientist.pdf" target="_blank" class="btn btn-secondary" style="border-color: var(--accent-gold);">
-                            <i class="fas fa-file-pdf"></i> Download Resume (PDF)
-                        </a>
+                        <button onclick="openResumeModal('Contact Section View')" class="btn btn-secondary" style="border-color: var(--accent-gold);">
+                            <i class="fas fa-file-pdf"></i> View / Download Resume
+                        </button>
                     </div>
                 </div>
             </div>
@@ -1803,7 +2001,7 @@
             <a href="https://linkedin.com/in/chetan-patil-914618218" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://github.com/chetan1622" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
             <a href="mailto:chetan.g.patil1622@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            <a href="Chetan_Patil_Data_Scientist.pdf" target="_blank" aria-label="Resume PDF"><i class="fas fa-file-pdf"></i></a>
+            <a href="javascript:void(0)" onclick="openResumeModal('Footer Icon')" aria-label="Resume PDF"><i class="fas fa-file-pdf"></i></a>
         </div>
         <p>&copy; 2026 Chetan G. Patil. All Rights Reserved.</p>
     </footer>
@@ -1822,6 +2020,67 @@
 
         function closeMenu() {
             document.getElementById('navLinks').classList.remove('active');
+        }
+
+        // ===== RESUME MODAL & TRACKING =====
+        function openResumeModal(source = 'Website') {
+            const modal = document.getElementById('resumeModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            trackResumeDownload(source + ' (View Modal)');
+        }
+
+        function closeResumeModal(event, force = false) {
+            const modal = document.getElementById('resumeModal');
+            if (force || (event && event.target === modal)) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        async function trackResumeDownload(source = 'Download') {
+            // Show download toast
+            showToast('📄 Resume accessed! (' + source + ')');
+
+            // Send notification beacon/alert with visitor details
+            try {
+                let locationData = { ip: '', city: 'India', region: '', country_name: 'India' };
+                try {
+                    const res = await fetch('https://ipapi.co/json/');
+                    if (res.ok) {
+                        locationData = await res.json();
+                    }
+                } catch (e) {}
+
+                const alertPayload = {
+                    access_key: '56e91ea6-b9b3-4f04-89c0-96f7c9e0cfd8',
+                    subject: `📄 Resume Download Alert - Chetan Patil Portfolio (${locationData.city || 'Visitor'})`,
+                    from_name: 'Portfolio Resume Tracker',
+                    to_email: 'chetan.g.patil1622@gmail.com',
+                    message: `A recruiter or visitor just viewed/downloaded your resume from your portfolio!
+
+📅 Date & Time: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
+📍 Location: ${locationData.city || 'Unknown'}, ${locationData.region || ''}, ${locationData.country_name || ''}
+🌐 IP: ${locationData.ip || 'Unknown'}
+🎯 Action Source: ${source}
+💻 Browser / Device: ${navigator.userAgent}`
+                };
+
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(alertPayload)
+                }).catch(() => {});
+            } catch (err) {}
+        }
+
+        function showToast(msg = 'Resume download started. Thank you for viewing!') {
+            const toast = document.getElementById('downloadToast');
+            toast.querySelector('span').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
         }
 
         // ===== TYPING EFFECT =====
@@ -1954,7 +2213,9 @@
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 const lightbox = document.getElementById('lightbox');
+                const resumeModal = document.getElementById('resumeModal');
                 lightbox.classList.remove('active');
+                resumeModal.classList.remove('active');
                 document.body.style.overflow = '';
             }
         });
